@@ -1,0 +1,231 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "Jev (TypeSafe)",
+  "id": "io.camunda:jev:1",
+  "description": "Use TypeSafe's Jev model to classify, score, or judge any piece of text or structured data, and get back reliable, structured answers your process can act on directly.",
+  "metadata": {
+    "keywords": [ "typesafe", "jev", "ai", "judgment", "classification" ]
+  },
+  "documentationRef": "https://docs.typesafe.ai/",
+  "icon": {
+    "contents": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAABDBAMAAAA15KVAAAAAIVBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAt9G3DAAAACnRSTlMAIN4+hO8QZb6fMcx1nQAAAh1JREFUeNrFlr1Ow0AQhM8kClKqCFFAKlAQkVxFiCKi4kdQUAORXKVIA1VkiQdA6dyloXAXKxYwT8nu2b6z472jZCvH+qLczuzORalm9R7Xyl+9e+DGj1wAyJY+YgqubOImFsAs3Ib4GbiI/QjbebjpAlsH0QnxPVHhRh0DY5EIEn0IQvjQc6ndR+TXqkDUO6TTvAMPqkL2JITaXSkvcgSMlBdZRHia+xGrVif6EpGABSn6SoG1jJxYo9lqD0KarVKy2o1MuS9W+cKFsNHsZkg/JiPaaP7YjYCJiPSRl989aFtdIShGu5PAiN1CwF4HqR7PtYhwv1qbBLc7m1AhNHfZgLQZ9RGkzU2oEO43A574MWBcQNQhHYI650fCXySERpsd1Y9dbEQk0O/1YzE6/4O8sb1ehPwd+5FOqL3zIORuFpN3buScNnqpyMA7J/KsN5q8y51IudHknRsZmaCSkV5UzeorrIoNhOf5tFx/vboComI9qzx1ejskRMcYaZPrpBIR7jdLzdiLSGHAqvxwhaWA8KzObKzxaLcQdZXPTc6DY6uNDDOb85fAmRspcp5D3oWUOa9vJhmhjS61iV0I5fxnqVQoI1OrzRGqkGwgtZuoFuh1pPZ6X7z+hjm1W+V8YgK9gaCe87l0FQ/Na9v5Tr2ZC5pk+3DdsMUJp61INUVbvbU5L5eWxeS8XLQJI9u5XPEf/yrYu/JC9zJpS5BfG0g5Ct0u0SQAAAAASUVORK5CYII="
+  },
+  "version": 1,
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "appliesTo": [ "bpmn:Task" ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "engines": {
+    "camunda": "^8.8"
+  },
+  "groups": [
+    { "id": "authentication", "label": "Authentication" },
+    { "id": "payload", "label": "Payload", "openByDefault": true },
+    { "id": "output", "label": "Output mapping" },
+    { "id": "error", "label": "Error handling" },
+    { "id": "retries", "label": "Retries" }
+  ],
+  "properties": [
+    {
+      "value": "io.camunda:http-json:1",
+      "binding": {
+        "property": "type",
+        "type": "zeebe:taskDefinition"
+      },
+      "type": "Hidden"
+    },
+    {
+      "value": "bearer",
+      "binding": {
+        "name": "authentication.type",
+        "type": "zeebe:input"
+      },
+      "type": "Hidden"
+    },
+    {
+      "id": "authentication.token",
+      "label": "API key",
+      "group": "authentication",
+      "feel": "optional",
+      "constraints": {
+        "notEmpty": true
+      },
+      "binding": {
+        "name": "authentication.token",
+        "type": "zeebe:input"
+      },
+      "type": "String"
+    },
+    {
+      "value": "POST",
+      "binding": {
+        "name": "method",
+        "type": "zeebe:input"
+      },
+      "type": "Hidden"
+    },
+    {
+      "value": "https://api.typesafe.ai/v1/systemone",
+      "binding": {
+        "name": "url",
+        "type": "zeebe:input"
+      },
+      "type": "Hidden"
+    },
+    {
+      "value": "={\"Content-Type\": \"application/json\"}",
+      "binding": {
+        "name": "headers",
+        "type": "zeebe:input"
+      },
+      "type": "Hidden"
+    },
+    {
+      "id": "model",
+      "label": "Model",
+      "group": "payload",
+      "feel": "optional",
+      "value": "jev-latest",
+      "constraints": {
+        "notEmpty": true
+      },
+      "binding": {
+        "name": "internal_model",
+        "type": "zeebe:input"
+      },
+      "type": "String"
+    },
+    {
+      "id": "state",
+      "label": "State",
+      "tooltip": "The facts Jev reads before answering your questions, like the message, ticket, or record you want it to judge. See <a href=\"https://docs.typesafe.ai/concepts/state\">State</a>. Can be a plain string, or an object/list if you need to give it several related pieces of context.",
+      "group": "payload",
+      "feel": "optional",
+      "constraints": {
+        "notEmpty": true
+      },
+      "binding": {
+        "name": "internal_state",
+        "type": "zeebe:input"
+      },
+      "type": "Text"
+    },
+    {
+      "id": "questions",
+      "label": "Questions",
+      "tooltip": "The judgments to make about the state above, one per question. See <a href=\"https://docs.typesafe.ai/primitives\">primitives</a> for what a question can ask (Noul, Choice, Score), and the <a href=\"https://docs.typesafe.ai/api#param-questions\">API reference</a> for the exact JSON shape this field must match.",
+      "group": "payload",
+      "feel": "required",
+      "value": "={\n  \"is_urgent\": {\n    \"type\": \"noul\",\n    \"instructions\": \"Does this convey urgency?\"\n  }\n}",
+      "constraints": {
+        "notEmpty": true
+      },
+      "binding": {
+        "name": "internal_questions",
+        "type": "zeebe:input"
+      },
+      "type": "Text"
+    },
+    {
+      "value": "={\"state\": internal_state, \"model\": internal_model, \"questions\": internal_questions}",
+      "binding": {
+        "name": "body",
+        "type": "zeebe:input"
+      },
+      "type": "Hidden"
+    },
+    {
+      "value": "1",
+      "binding": {
+        "key": "elementTemplateVersion",
+        "type": "zeebe:taskHeader"
+      },
+      "type": "Hidden"
+    },
+    {
+      "value": "io.camunda:jev:1",
+      "binding": {
+        "key": "elementTemplateId",
+        "type": "zeebe:taskHeader"
+      },
+      "type": "Hidden"
+    },
+    {
+      "id": "resultVariable",
+      "label": "Result variable",
+      "tooltip": "Name of variable to store the response in. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/#result-variable\" target=\"_blank\">documentation</a>.",
+      "group": "output",
+      "binding": {
+        "key": "resultVariable",
+        "type": "zeebe:taskHeader"
+      },
+      "type": "String"
+    },
+    {
+      "id": "resultExpression",
+      "label": "Result expression",
+      "tooltip": "Expression to map the response into process variables. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/#result-expression\" target=\"_blank\">documentation</a>.",
+      "value": "{\n  jevResult: response.body\n}",
+      "feel": "required",
+      "group": "output",
+      "binding": {
+        "key": "resultExpression",
+        "type": "zeebe:taskHeader"
+      },
+      "type": "Text"
+    },
+    {
+      "id": "errorExpression",
+      "label": "Error expression",
+      "tooltip": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "feel": "required",
+      "group": "error",
+      "binding": {
+        "key": "errorExpression",
+        "type": "zeebe:taskHeader"
+      },
+      "type": "Text"
+    },
+    {
+      "id": "retryCount",
+      "label": "Retries",
+      "tooltip": "Number of retries",
+      "value": "3",
+      "feel": "optional",
+      "group": "retries",
+      "binding": {
+        "property": "retries",
+        "type": "zeebe:taskDefinition"
+      },
+      "type": "String"
+    },
+    {
+      "id": "retryBackoff",
+      "label": "Retry backoff",
+      "tooltip": "ISO-8601 duration to wait between retries",
+      "value": "PT30S",
+      "group": "retries",
+      "binding": {
+        "key": "retryBackoff",
+        "type": "zeebe:taskHeader"
+      },
+      "type": "String"
+    },
+    {
+      "id": "jobTimeout",
+      "label": "Job timeout",
+      "tooltip": "ISO-8601 duration after which Zeebe considers this job timed out if not yet completed. Leave empty to use the default timeout",
+      "optional": true,
+      "group": "retries",
+      "binding": {
+        "key": "jobTimeout",
+        "type": "zeebe:taskHeader"
+      },
+      "type": "String"
+    }
+  ]
+}
