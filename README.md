@@ -12,7 +12,6 @@ For example, you can route support requests to the right team, score customer fe
 
 - Ask several [Noul, Choice, or Score](https://docs.typesafe.ai/primitives) questions about the same data in one task.
 - Route the process using typed answers, confidence scores, and probabilities.
-- Track input and output token usage in your process data.
 
 ## Installation
 
