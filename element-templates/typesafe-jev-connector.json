@@ -23,7 +23,7 @@
     "camunda": "^8.8"
   },
   "groups": [
-    { "id": "authentication", "label": "Authentication" },
+    { "id": "authentication", "label": "Authentication", "openByDefault": true },
     { "id": "payload", "label": "Payload", "openByDefault": true },
     { "id": "output", "label": "Output mapping" },
     { "id": "error", "label": "Error handling" },
