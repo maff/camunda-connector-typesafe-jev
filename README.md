@@ -16,7 +16,7 @@ For example, you can route support requests to the right team, score customer fe
 
 ## Installation
 
-Download [`jev-connector.json`](element-templates/jev-connector.json).
+Download [`typesafe-jev-connector.json`](element-templates/typesafe-jev-connector.json).
 
 - **Hub / Web Modeler:** Upload the element template to your project.
 - **Desktop Modeler:** Copy the file into your [element templates directory](https://docs.camunda.io/docs/components/modeler/desktop-modeler/element-templates/configuring-templates/) and restart Modeler.

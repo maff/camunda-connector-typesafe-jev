@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
   "name": "Jev (TypeSafe)",
-  "id": "io.camunda:jev:1",
+  "id": "io.camunda.connectors.TypeSafeJev.v1",
   "description": "Use TypeSafe's Jev model to classify, score, or judge any piece of text or structured data, and get back reliable, structured answers your process can act on directly.",
   "metadata": {
     "keywords": [ "typesafe", "jev", "ai", "judgment", "classification" ]
@@ -147,7 +147,7 @@
       "type": "Hidden"
     },
     {
-      "value": "io.camunda:jev:1",
+      "value": "io.camunda.connectors.TypeSafeJev.v1",
       "binding": {
         "key": "elementTemplateId",
         "type": "zeebe:taskHeader"
